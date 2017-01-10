@@ -1,0 +1,9 @@
+#delete{
+	float: right;
+}
+.notExported {
+    background-color: red;
+}
+.Exported {
+	background-color: white;
+}

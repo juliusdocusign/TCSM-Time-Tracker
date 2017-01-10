@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!--CREATED BY JULIUS JAVIER - FOR INTERNAL DOCUSIGN USE ONLY-->
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, shrink-to-fit=no, initial-scale=1">
+    <meta name="description" content="TCSM Time Tracker">
+    <meta name="author" content="Julius Javier">
+    <link rel="shortcut icon" type="image/x-icon" href="/new_favicon.png">
+    <title>TCSM - Time Tracker</title>
+    <!-- Bootstrap Core CSS -->
+    <link href="assets/css/bootstrap.min.css" rel="stylesheet">
+    <link href="assets/css/sb-admin-2.min.css" rel="stylesheet">
+    <link href="assets/css/style.css" rel="stylesheet">
+    <link href="assets/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <!-- Custom CSS -->
+    <link href="assets/css/simple-sidebar.css" rel="stylesheet">
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+</head>
+
+<body id="body" class="Exported">
+
+    <div id="wrapper">
+        <!-- Sidebar -->
+        <div id="sidebar-wrapper">
+            <ul class="sidebar-nav">
+                <li class="sidebar-brand">
+                    <a href="#">
+                        TCSM - Time Tracker
+                    </a>
+
+                </li>
+                <li>
+                    <a target="_blank" href="https://docusign.okta.com/app/UserHome">Okta</a>
+                </li>
+                <li>
+                    <a href="mailto:julius.javier@docusign.com?Subject=Time%20Tracker" target="_top">Contact</a>
+                </li>
+                <li>
+                    <a>
+                      Version 1.0.1
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <!-- /#sidebar-wrapper -->
+
+        <!-- Page Content -->
+        <div id="page-content-wrapper">
+            <div class="container-fluid col-lg-6" style="float:left;">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <h1>Dashboard</h1>
+                        <div id="bacon">
+                        </div>
+                        <h4 id="dateExported">
+                        </h4>
+                        <!-- Start of KPI Bar -->
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="panel panel-primary">
+                                    <div class="panel-heading">
+                                        <div class="row">
+                                            <div class="col-xs-3">
+                                                <i class="fa fa-tasks fa-5x"></i>
+                                            </div>
+                                            <div class="col-xs-9 text-right">
+                                                <div id="totalTasks" class="huge taskCount">0</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="panel-footer">
+                                        <span class="pull-left">Total Tasks</span>
+                                        <div class="clearfix"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div id="totalHrsPanelDiv" class="panel totalHrsPanel panel-green">
+                                    <div class="panel-heading">
+                                        <div class="row">
+                                            <div class="col-xs-3">
+                                                <i class="fa fa-clock-o fa-5x"></i>
+                                            </div>
+                                            <div class="col-xs-9 text-right">
+                                                <div id="totalHours" class="huge">0</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="panel-footer">
+                                        <span class="pull-left">Total Hours</span>
+                                        <div class="clearfix"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- End of KPI Bar -->
+                        <form class="form-group">
+                            <div class="row">
+                                <!-- <div class="col-xs-2">
+                                    <label for="sel1">Status</label>
+                                    <select class="form-control" id="statusSel">
+                        						<option>Open</option>
+                        						<option>Completed</option>
+                        					</select>
+                                </div> -->
+                                <div class="col-xs-3">
+                                    <label for="sel1">Type:</label>
+                                    <select class="form-control" id="typeSel">
+                        							<option>-- Select One --</option>
+                        							<option>Administrative</option>
+                        							<option>Account Mgmt</option>
+                        							<option>Technical</option>
+                                      <option>Training</option>
+                        							<option>Side Projects</option>
+                        							<option>PTO</option>
+                        						</select>
+                                </div>
+
+                                <div class="col-xs-4">
+                                    <label for="accountSel">Account:</label>
+                                    <select class=form-control id="accountSelGroup">
+                                </select>
+                                </div>
+                                <div id="timeInputDiv" class="col-xs-3">
+                                    <label class="control-label" for="timeInput">Time Input</label>
+                                    <select class="form-control" id="timeInput">
+                                      <option>.25</option>
+                                      <option>.50</option>
+                                      <option>.75</option>
+                                      <option>1</option>
+                                      <option>1.25</option>
+                                      <option>1.50</option>
+                                      <option>1.75</option>
+                                      <option>2</option>
+                                      <option>2.25</option>
+                                      <option>2.50</option>
+                                      <option>2.75</option>
+                                      <option>3</option>
+                                      <option>3.25</option>
+                                      <option>3.50</option>
+                                      <option>3.75</option>
+                                      <option>4</option>
+                                      <option>4.25</option>
+                                      <option>4.50</option>
+                                      <option>4.75</option>
+                                      <option>5</option>
+                                      <option>5.25</option>
+                                      <option>5.50</option>
+                                      <option>5.75</option>
+                                      <option>6</option>
+                                      <option>6.25</option>
+                                      <option>6.50</option>
+                                      <option>6.75</option>
+                                      <option>7</option>
+                                      <option>7.25</option>
+                                      <option>7.50</option>
+                                      <option>7.75</option>
+                                      <option>8</option>
+                                      <option>8.25</option>
+                                      <option>8.50</option>
+                                      <option>8.75</option>
+                                      <option>9</option>
+                                      <option>9.25</option>
+                                      <option>9.50</option>
+                                      <option>9.75</option>
+                                      <option>10</option>
+                                      <option>10.25</option>
+                                      <option>10.50</option>
+                                      <option>10.75</option>
+                                      <option>11</option>
+                                      <option>11.25</option>
+                                      <option>11.50</option>
+                                      <option>11.75</option>
+                                      <option>12</option>
+                                      <option>12.25</option>
+                                      <option>12.50</option>
+                                      <option>12.75</option>
+                                      <option>13</option>
+                                      <option>13.25</option>
+                                      <option>13.50</option>
+                                      <option>13.75</option>
+                                      <option>14</option>
+                                      <option>14.25</option>
+                                      <option>14.50</option>
+                                      <option>14.75</option>
+                                      <option>15</option>
+                                    </select>
+                                </div>
+                                <button id="addTask" type="button" style="margin-top: 25px;" class="btn btn-primary">SAVE</button>
+                            </div>
+                        </form>
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <a href="#menu-toggle" class="btn btn-default" id="menu-toggle">Toggle Menu</a>
+                                <a href="#" class="btn btn-default" id="exportToCSV" style="float:right;">Export to CSV</a>
+                                <a href="#" class="btn btn-default" id="clearAll" style="float:right; margin-right: 10px;">Clear All</a>
+                            </div>
+
+                        </div>
+
+                        <ul class="list-group toDoListGroup col-md-12" style="padding:20px;">
+                        </ul>
+
+                    </div>
+                </div>
+            </div>
+
+            <!-- FAQ Area -->
+            <div id="FAQContainer" class="col-md-5" style="margin-top:143px;">
+                <div class="col-md-8" style="float:left;">
+                    <div id="legend" class="panel panel-yellow">
+                        <div class="panel-heading">
+                            <div class="row">
+                                <div class="col-xs-3">
+                                    <i class="fa fa-question fa-5x"></i>
+                                </div>
+                                <div class="col-xs-9 text-right">
+                                    <div id="tFAQ" class="huge">FAQ</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel-footer">
+                            <span class="pull-left"><b>When To Use The Different Types:</b></span>
+                            <ul class="pull-left">
+                                <li>
+                                    <b>Administrative</b> - Mainly used for internal meetings or internal emails
+                                </li>
+                                <li>
+                                    <b>Account Mgmt</b> - Non-technical work or meetings
+                                </li>
+                                <li>
+                                    <b>Technical</b> - All case work or technical meetings
+                                </li>
+                                <li>
+                                    <b>Training</b> - When attending a training session virtual or in-person
+                                </li>
+                                <li>
+                                    <b>Side Projects</b> - Anything non-customer related
+                                </li>
+                                <li>
+                                    <b>PTO</b> - PTO or Sick Time
+                                </li>
+                            </ul>
+                            <span class="pull-left"><b>When Do I Export To CSV?</b></span>
+                            <ul class="pull-left">
+                                <li>
+                                    Export at the end of the business day prior to going home to prevent any data loss overnight.
+                                </li>
+                            </ul>
+                            <span class="pull-left"><b>When Do I Upload To Box?</b></span>
+                            <ul class="pull-left">
+                                <li>
+                                    At the end of your work week, copy and paste each day's worth of time into the last day's time sheet to compile a full week's worth of tracked time, then upload to Box.
+                                </li>
+                            </ul>
+                            <span class="pull-left"><b>When Do I Clear All?</b></span>
+                            <ul class="pull-left">
+                                <li>
+                                    You should clear all items at the beginning of your next work day.
+                                </li>
+                            </ul>
+                            <div class="clearfix"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- End of FAQ -->
+
+
+
+
+            <!-- Edit Modal -->
+            <div class="modal fade" id="editModal" role="dialog">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            <h4 class="modal-title">Edit</h4>
+                        </div>
+
+                        <div class="modal-body">
+                            <!--  <input type="text" class="form-control" id="edit-input"> -->
+                            <form class="form-group">
+                                <div class="row">
+                                    <!-- <div class="col-xs-3" style="padding-bottom: 20px;">
+                                        <label for="statusSelM">Status</label>
+                                        <select class="form-control" id="statusSelM">
+                              <option>Open</option>
+                              <option>Completed</option>
+                            </select>
+                                    </div> -->
+                                    <div class="col-xs-3">
+                                        <label for="typeSelM">Type:</label>
+                                        <select class="form-control disabledInput" id="typeSelM" disabled>
+                                          <option>-- Select One --</option>
+                                          <option>Administrative</option>
+                                          <option>Account Mgmt</option>
+                                          <option>Technical</option>
+                                          <option>Side Projects</option>
+                                          <option>PTO</option>
+                                      </select>
+                                    </div>
+                                    <div class="col-xs-3">
+                                        <label for="accountSelGroupM">Account:</label>
+                                        <select class="form-control disabledInput" id="accountSelGroupM" disabled>
+                                      </select>
+                                    </div>
+                                    <div id="timeInputDivM" class="col-xs-3">
+                                        <label class="control-label" for="timeInputM">Time Input</label>
+                                        <select class="form-control" id="timeInputM">
+                                        <option>.25</option>
+                                        <option>.50</option>
+                                        <option>.75</option>
+                                        <option>1</option>
+                                        <option>1.25</option>
+                                        <option>1.50</option>
+                                        <option>1.75</option>
+                                        <option>2</option>
+                                        <option>2.25</option>
+                                        <option>2.50</option>
+                                        <option>2.75</option>
+                                        <option>3</option>
+                                        <option>3.25</option>
+                                        <option>3.50</option>
+                                        <option>3.75</option>
+                                        <option>4</option>
+                                        <option>4.25</option>
+                                        <option>4.50</option>
+                                        <option>4.75</option>
+                                        <option>5</option>
+                                        <option>5.25</option>
+                                        <option>5.50</option>
+                                        <option>5.75</option>
+                                        <option>6</option>
+                                        <option>6.25</option>
+                                        <option>6.50</option>
+                                        <option>6.75</option>
+                                        <option>7</option>
+                                        <option>7.25</option>
+                                        <option>7.50</option>
+                                        <option>7.75</option>
+                                        <option>8</option>
+                                        <option>8.25</option>
+                                        <option>8.50</option>
+                                        <option>8.75</option>
+                                        <option>9</option>
+                                        <option>9.25</option>
+                                        <option>9.50</option>
+                                        <option>9.75</option>
+                                        <option>10</option>
+                                        <option>10.25</option>
+                                        <option>10.50</option>
+                                        <option>10.75</option>
+                                        <option>11</option>
+                                        <option>11.25</option>
+                                        <option>11.50</option>
+                                        <option>11.75</option>
+                                        <option>12</option>
+                                        <option>12.25</option>
+                                        <option>12.50</option>
+                                        <option>12.75</option>
+                                        <option>13</option>
+                                        <option>13.25</option>
+                                        <option>13.50</option>
+                                        <option>13.75</option>
+                                        <option>14</option>
+                                        <option>14.25</option>
+                                        <option>14.50</option>
+                                        <option>14.75</option>
+                                        <option>15</option>
+                                      </select>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-primary" id="edit-button" data-dismiss="modal">Save changes</button>
+                                </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- /#page-content-wrapper -->
+        </div>
+        <!-- /#wrapper -->
+        <!-- jQuery -->
+        <script src="assets/js/jquery.js"></script>
+        <script type="text/javascript" src="assets/js/app.js"></script>
+        <!-- Bootstrap Core JavaScript -->
+        <script src="assets/js/bootstrap.min.js"></script>
+</body>
+
+</html>
