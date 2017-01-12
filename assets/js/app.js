@@ -257,7 +257,7 @@ $('#addTask').click(function(){
       allItems.reverse();
 			for(var i = 0; i < items.length; i++) {
 
-          $('.toDoListGroup').append('<li class= "list-group-item toDoItem"><p>'+'<b>Date: </b>'+' ' + items[i][0]+' '+'<b>Type: </b>'+' ' + items[i][1] +' '+'<b>Account: </b>'+' '+ items[i][2]+' '+'<b>Time: </b>'+ items[i][3] + '</p><button type="button" class="btn btn-success edit-button" data-toggle="modal" data-target="#editModal">Edit</button><button id="delete" type="button" style="float: right;" class="delete btn btn-danger">Delete</button></li>');
+          $('.toDoListGroup').append('<li class= "list-group-item toDoItem"><p>'+'<b>Date: </b>'+' ' + items[i][0]+' '+'<b>Type: </b>'+' ' + items[i][1] +' '+'<b>Account: </b>'+' '+ items[i][2]+' '+'<b>Time: </b>'+ items[i][3] + '</p><button type="button" class="btn btn-success edit-button" data-toggle="modal" data-target="#editModal">Edit</button><button id="delete" type="button" style="float: right;" class="disabled btn btn-danger">Delete</button></li>');
           newTime = 0;
           intTime = 0;
           var timeInputArray = [items[i][3]];
