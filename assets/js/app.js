@@ -58,7 +58,7 @@ $(document).ready(function()
 
    loadList(items);
 
-   // export to CSV
+   // Weekly Total to CSV
    $('#exportToCSV').click(function()
    {
      var dateEx = new Date();
@@ -78,7 +78,7 @@ $(document).ready(function()
      var csvData = encodeURI(csvContent);
      link = document.createElement('a');
      link.setAttribute('href', csvData);
-     link.setAttribute('download',parsedDate+".csv");
+     link.setAttribute('download',"Weekly Total - "+ parsedDate+".csv");
      document.body.appendChild(link);
      link.click();
      //window.open(csvData);
@@ -102,7 +102,7 @@ $(document).ready(function()
      var csvData = encodeURI(csvContent);
      link = document.createElement('a');
      link.setAttribute('href', csvData);
-     link.setAttribute('download',parsedDate+".csv");
+     link.setAttribute('download',"Backup for " +parsedDate+".csv");
      document.body.appendChild(link);
      link.click();
      //window.open(csvData);
@@ -130,7 +130,7 @@ $('#addTask').click(function(){
     items.reverse();
     allItems.reverse();
     //console.log(value);
-    if (item4 != 0 && item3 != "-- Select One --" && item2 != "-- Select One --"){
+    if (item3 != "-- Select One --" && item2 != "-- Select One --"){
       console.log("this is timeinput "+ item4);
       items.push(value);
       allItems.push(value);
@@ -257,7 +257,7 @@ $('#addTask').click(function(){
       allItems.reverse();
 			for(var i = 0; i < items.length; i++) {
 
-          $('.toDoListGroup').append('<li class= "list-group-item toDoItem"><p>'+'<b>Date: </b>'+' ' + items[i][0]+' '+'<b>Type: </b>'+' ' + items[i][1] +' '+'<b>Account: </b>'+' '+ items[i][2]+' '+'<b>Time: </b>'+ items[i][3] + '</p><button type="button" class="btn btn-success edit-button" data-toggle="modal" data-target="#editModal">Edit</button><button id="delete" type="button" style="float: right;" class="delete btn btn-danger">Delete</button></li>');
+          $('.toDoListGroup').append('<li class= "list-group-item toDoItem"><p>'+'<b>Date: </b>'+' ' + items[i][0]+' '+'<b>Type: </b>'+' ' + items[i][1] +' '+'<b>Account: </b>'+' '+ items[i][2]+' '+'<b>Time: </b>'+ items[i][3] + '</p><button type="button" class="btn btn-success edit-button" data-toggle="modal" data-target="#editModal">Edit</button><button id="deleteDep" type="button" style="float: right;" class="disabled btn btn-danger">Delete</button></li>');
           newTime = 0;
           intTime = 0;
           var timeInputArray = [items[i][3]];
