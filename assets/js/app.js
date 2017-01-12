@@ -3,6 +3,7 @@ $(document).ready(function()
   var counter = 1;
   var url ="Accounts.json";
   var items = getFromLocal('TTI');
+  var allItems = getFromLocal('allItems');
   var showData = $('#accountSelGroup');
   var date = new Date();
   var dateEx = new Date();
@@ -66,6 +67,30 @@ $(document).ready(function()
      storeToLocal('DE',dateExported);
      var data = [];
      var headers = ["Date","Type","Account","Time Spent"];
+     allItems.push(headers);
+     data = allItems.reverse();
+     var csvContent = "data:text/csv;charset=utf-8;,";
+     data.forEach(function(infoArray, index){
+        dataString = infoArray.join(",");
+        csvContent += dataString+ "\n";
+    // alert(csvContent);
+      });
+     var csvData = encodeURI(csvContent);
+     link = document.createElement('a');
+     link.setAttribute('href', csvData);
+     link.setAttribute('download',parsedDate+".csv");
+     document.body.appendChild(link);
+     link.click();
+     //window.open(csvData);
+     baconTime();
+     location.reload();
+   });
+
+   // BackUp to CSV
+   $('#BackUpToCSV').click(function()
+   {
+     var data = [];
+     var headers = ["Date","Type","Account","Time Spent"];
      items.push(headers);
      data = items.reverse();
      var csvContent = "data:text/csv;charset=utf-8;,";
@@ -81,7 +106,6 @@ $(document).ready(function()
      document.body.appendChild(link);
      link.click();
      //window.open(csvData);
-     baconTime();
      location.reload();
    });
 
@@ -104,11 +128,14 @@ $('#addTask').click(function(){
     value = itemDate.concat(item2,item3,item4);
 
     items.reverse();
+    allItems.reverse();
     //console.log(value);
     if (item4 != 0 && item3 != "-- Select One --" && item2 != "-- Select One --"){
       console.log("this is timeinput "+ item4);
       items.push(value);
+      allItems.push(value);
       storeToLocal('TTI', items);
+      storeToLocal('allItems', allItems);
       loadList(items);
 
       $('#typeSel').val("-- Select One --");
@@ -136,8 +163,10 @@ $('#addTask').click(function(){
 
     if (confirm("Are you sure you want to delete ALL items?")) {
     //event.stopPropagation();
-    items = [];
-    console.log(items);
+    allItems = [];
+    items= [];
+    console.log(allItems);
+    storeToLocal('allItems', allItems);
     storeToLocal('TTI', items);
     loadList(items);
     taskCount();
@@ -146,22 +175,45 @@ $('#addTask').click(function(){
   }
     return false;
    });
+   $('#clearYesterday').click(function(){
+
+     if (confirm("Are you sure you want to delete yesterday's items?")) {
+     //event.stopPropagation();
+     items = [];
+     console.log(items);
+     storeToLocal('TTI', items);
+     loadList(items);
+     taskCount();
+     hourCount();
+     location.reload();
+   }
+     return false;
+    });
+
 
 	// Delete One Item
 	$('.toDoListGroup').delegate('.delete', 'click', function(event)
   {
     if (confirm("Are you sure?")) {
-      event.stopPropagation();
+      //event.stopPropagation();
       index = $('.delete').index(this);
+      console.log("deleting item " + index);
       $('.toDoItem').eq(index).slideUp("fast", function()
       {
+        console.log(allItems[index]);
+        console.log(items[index]);
         $(this).remove();
         taskCount();
         hourCount();
-        location.reload();
+        //location.reload();
       });
+
       items.splice(index, 1);
+      allItems.reverse();
+      allItems.splice(index, 1);
+
       storeToLocal('TTI', items);
+      storeToLocal('allItems', allItems);
     }
       return false;
   	});
@@ -173,6 +225,8 @@ $('#addTask').click(function(){
     $('#timeInputM').val();
     $('#editItems').remove();
 		index = $('.edit-button').index(this);
+    console.log(index);
+    console.log(items);
 		var content = items[index];
     var editItem1 = content[3];
 
@@ -180,12 +234,14 @@ $('#addTask').click(function(){
     $('#accountSelGroupM').append('<option id="editItems">'+ content[2]+'</option>');
     $('#edit-button').click(function(){
       items[index][3] = $('#timeInputM').val();
+      allItems[index][3] = $('#timeInputM').val();
       items.reverse();
+      allItems.reverse();
       storeToLocal("TTI", items);
+      storeToLocal("allItems", allItems);
       loadList(items);
       location.reload();
     });
-
 	});
 
 
@@ -194,27 +250,31 @@ $('#addTask').click(function(){
 	function loadList(items)
   {
 
-	$('.toDoItem').remove();
+	  $('.toDoItem').remove();
 		if(items.length > 0) {
       tIArray =[];
       items.reverse();
+      allItems.reverse();
 			for(var i = 0; i < items.length; i++) {
-        $('.toDoListGroup').append('<li class= "list-group-item toDoItem"><p>'+'<b>Type: </b>'+' ' + items[i][1] +' '+'<b>Account: </b>'+' '+ items[i][2]+' '+'<b>Time: </b>'+ items[i][3] + '</p><button type="button" class="btn btn-success edit-button" data-toggle="modal" data-target="#editModal">Edit</button><button id="delete" type="button" style="float: right;" class="delete btn btn-danger">Delete</button></li>');
-        newTime = 0;
-        intTime = 0;
-        var timeInputArray = [items[i][3]];
-        tIArray.push(timeInputArray);
-        intTime = tIArray.map(Number);
-        newTime = intTime.reduce(add, 0);
 
-          function add(a, b) {
-          return a + b;
-          }
-        taskCount();
-        hourCount();
+          $('.toDoListGroup').append('<li class= "list-group-item toDoItem"><p>'+'<b>Date: </b>'+' ' + items[i][0]+' '+'<b>Type: </b>'+' ' + items[i][1] +' '+'<b>Account: </b>'+' '+ items[i][2]+' '+'<b>Time: </b>'+ items[i][3] + '</p><button type="button" class="btn btn-success edit-button" data-toggle="modal" data-target="#editModal">Edit</button><button id="delete" type="button" style="float: right;" class="delete btn btn-danger">Delete</button></li>');
+          newTime = 0;
+          intTime = 0;
+          var timeInputArray = [items[i][3]];
+          tIArray.push(timeInputArray);
+          intTime = tIArray.map(Number);
+          newTime = intTime.reduce(add, 0);
+
+            function add(a, b) {
+            return a + b;
+            }
+          taskCount();
+          hourCount();
+
+
       }
-
 		}
+
 	};
 
 	function storeToLocal(key, items)
