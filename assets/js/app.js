@@ -13,29 +13,34 @@ $(document).ready(function()
   var totalTime = 0;
   var newTime = 0;
   var tIArray = [];
-  baconTime();
+
+ baconTime();
+
 
 
   console.log(parsedDate);
   $('#bacon').append('<h3>'+ parsedDate +'</h3>');
 
   function baconTime(){
+  console.log("baconTime");
   storeToLocal('PD',parsedDate);
   dateExported = getFromLocal('DE');
   parsedDate = getFromLocal('PD');
+
+
   $('#dateExported').text("Last Exported: " + dateExported);
 
-  if (parsedDate == dateExported) {
-    dateExported = getFromLocal('DE');
-    parsedDate = getFromLocal('PD');
-    console.log("we are in IF" + parsedDate + dateExported);
-  $("#body").removeClass("notExported");
-    $("#body").addClass("Exported");
-  } else {
-    $("#body").removeClass("Exported");
-    $("#body").addClass("notExported");
-    return false;
-  }
+  // if (parsedDate == dateExported) {
+  //   dateExported = getFromLocal('DE');
+  //   parsedDate = getFromLocal('PD');
+  //   console.log("we are in IF" + parsedDate + dateExported);
+  // $("#body").removeClass("notExported");
+  //   $("#body").addClass("Exported");
+  // } else {
+  //   $("#body").removeClass("Exported");
+  //   $("#body").addClass("notExported");
+  //   return false;
+  // }
 }
   // Read accounts from json file
    $.getJSON(url, function (data) {
@@ -177,7 +182,7 @@ $('#addTask').click(function(){
    });
    $('#clearYesterday').click(function(){
 
-     if (confirm("Are you sure you want to delete yesterday's items?")) {
+     if (confirm("Are you sure you want to delete current items?")) {
      //event.stopPropagation();
      items = [];
      console.log(items);
