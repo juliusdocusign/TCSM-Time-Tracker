@@ -39,6 +39,16 @@
                     </a>
 
                 </li>
+
+                <li>
+                  <div style="padding: 20px;">
+                      <a>TCSM :</a>
+                      <select class=form-control id="tcsmGroup">
+
+                      </select>
+                  <button id="setTCSM" type="button" class="btn btn-primary">LOCK</button>
+                </div>
+                </li>
                 <li>
                     <a target="_blank" href="https://docusign.okta.com/app/UserHome">Okta</a>
                 </li>
@@ -47,7 +57,7 @@
                 </li>
                 <li>
                     <a>
-                      Version 1.1.0
+                      Version 1.1.1
                     </a>
                 </li>
             </ul>
@@ -56,7 +66,7 @@
 
         <!-- Page Content -->
         <div id="page-content-wrapper">
-            <div class="container-fluid col-lg-6" style="float:left;">
+            <div class="container-fluid col-lg-7" style="float:left;">
                 <div class="row">
                     <div class="col-lg-12">
                         <h1>Dashboard</h1>
@@ -204,7 +214,7 @@
                         <div class="row">
                             <div class="col-lg-12">
                                 <a href="#menu-toggle" class="btn btn-default" id="menu-toggle">Toggle Menu</a>
-                                  <a href="#" class="btn btn-default" id="exportToCSV" style="float:right;">Weekly Total to CSV</a>
+                                <a href="#" class="btn btn-default" id="exportToCSV" style="float:right;">Weekly Total to CSV</a>
                                 <a href="#" class="btn btn-default" id="BackUpToCSV" style="float:right;margin-right:10px;">Backup to CSV</a>
 
                                 <a href="#" class="btn btn-default" id="clearAll" style="float:right; margin-right: 10px;">Clear All</a>
@@ -222,8 +232,8 @@
             </div>
 
             <!-- FAQ Area -->
-            <div id="FAQContainer" class="col-md-5" style="margin-top:143px;">
-                <div class="col-md-8" style="float:left;">
+            <div id="FAQContainer" class="col-md-5" style="margin-top:146px;">
+                <div class="col-md-9" style="float:left;">
                     <div id="legend" class="panel panel-yellow">
                         <div class="panel-heading">
                             <div class="row">
@@ -236,66 +246,101 @@
                             </div>
                         </div>
                         <div class="panel-footer">
-                            <span class="pull-left"><b>When To Use The Different Types:</b></span>
-                            <ul class="pull-left">
-                                <li>
-                                    <b>Administrative</b> - Mainly used for internal meetings or internal emails
-                                </li>
-                                <li>
-                                    <b>Account Mgmt</b> - Non-technical work or meetings
-                                </li>
-                                <li>
-                                    <b>Technical</b> - All case work or technical meetings
-                                </li>
-                                <li>
-                                    <b>Training</b> - When attending a training session virtual or in-person
-                                </li>
-                                <li>
-                                    <b>Side Projects</b> - Anything non-customer related
-                                </li>
-                                <li>
-                                    <b>PTO</b> - PTO or Sick Time
-                                </li>
-                            </ul>
-                            <span class="pull-left"><b>When Do I Use Weekly Total to CSV?</b></span>
-                            <ul class="pull-left">
-                                <li>
-                                    Use this at the end of your last day of the work week.
-                                </li>
-                            </ul>
-                            <span class="pull-left"><b>When Do I Use Backup to CSV?</b></span>
-                            <ul class="pull-left">
-                                <li>
-                                    Use this nightly if you wish to backup your current days data in case of data loss overnight.
-                                </li>
-                            </ul>
-                            <span class="pull-left"><b>When Do I Upload To Box?</b></span>
-                            <ul class="pull-left">
-                                <li>
-                                    At the end of your work week, take the Weekly Total file and upload to your Box folder.
-                                </li>
-                            </ul>                            
-                            <span class="pull-left"><b>When Do I Clear Current?</b></span>
-                            <ul class="pull-left">
-                                <li>
-                                    You should clear current items at the start of a new business day. This removes all items that are displayed but not the weekly totals.
-                                </li>
-                            </ul>
-                            <span class="pull-left"><b>When Do I Clear All?</b></span>
-                            <ul class="pull-left">
-                                <li>
-                                    You should clear all items at the beginning of a new work week. <b>This will clear out all saved data!</b>
-                                </li>
-                            </ul>
+                            <div class="panel-group" id="accordion">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <h4 class="panel-title">
+                                          <a data-toggle="collapse" data-parent="#accordion" href="#collapse1">
+                                          When To Use Different Types:</a>
+                                        </h4>
+                                    </div>
+                                    <div id="collapse1" class="panel-collapse collapse in">
+                                        <div class="panel-body">
+                                          <ul class="pull-left">
+                                              <li>
+                                                  <b>Administrative</b> - Mainly used for internal meetings or internal emails
+                                              </li>
+                                              <li>
+                                                  <b>Account Mgmt</b> - Non-technical work or meetings
+                                              </li>
+                                              <li>
+                                                  <b>Technical</b> - All case work or technical meetings
+                                              </li>
+                                              <li>
+                                                  <b>Training</b> - When attending a training session virtual or in-person
+                                              </li>
+                                              <li>
+                                                  <b>Side Projects</b> - Anything non-customer related
+                                              </li>
+                                              <li>
+                                                  <b>PTO</b> - PTO or Sick Time
+                                              </li>
+                                          </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <h4 class="panel-title">
+                                          <a data-toggle="collapse" data-parent="#accordion" href="#collapse2">
+                                          When Do I Use Weekly Total to CSV?</a>
+                                        </h4>
+                                    </div>
+                                    <div id="collapse2" class="panel-collapse collapse">
+                                        <div class="panel-body">Use this at the end of your last day of the work week.</div>
+                                    </div>
+                                </div>
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <h4 class="panel-title">
+                                          <a data-toggle="collapse" data-parent="#accordion" href="#collapse3">
+                                          When Do I Use Backup to CSV?</a>
+                                        </h4>
+                                    </div>
+                                    <div id="collapse3" class="panel-collapse collapse">
+                                        <div class="panel-body">Use this nightly if you wish to backup your current days data in case of data loss overnight.</div>
+                                    </div>
+                                </div>
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <h4 class="panel-title">
+                                          <a data-toggle="collapse" data-parent="#accordion" href="#collapse4">
+                                          When Do I Upload To Box?</a>
+                                        </h4>
+                                    </div>
+                                    <div id="collapse4" class="panel-collapse collapse">
+                                        <div class="panel-body">At the end of your work week, take the Weekly Total file and upload to your Box folder.</div>
+                                    </div>
+                                </div>
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <h4 class="panel-title">
+                                          <a data-toggle="collapse" data-parent="#accordion" href="#collapse5">
+                                          When Do I Clear Current?</a>
+                                        </h4>
+                                    </div>
+                                    <div id="collapse5" class="panel-collapse collapse">
+                                        <div class="panel-body">You should clear current items at the start of a new business day. This removes all items that are displayed but not the weekly totals.</div>
+                                    </div>
+                                </div>
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <h4 class="panel-title">
+                                          <a data-toggle="collapse" data-parent="#accordion" href="#collapse6">
+                                          When Do I Clear All?</a>
+                                        </h4>
+                                    </div>
+                                    <div id="collapse6" class="panel-collapse collapse">
+                                        <div class="panel-body">You should clear all items at the beginning of a new work week. <b>This will clear out all saved data!</b></div>
+                                    </div>
+                                </div>
+                            </div>
                             <div class="clearfix"></div>
                         </div>
                     </div>
                 </div>
             </div>
             <!-- End of FAQ -->
-
-
-
 
             <!-- Edit Modal -->
             <div class="modal fade" id="editModal" role="dialog">
@@ -412,7 +457,7 @@
         <!-- /#wrapper -->
         <!-- jQuery -->
         <script src="assets/js/jquery.js"></script>
-        <script type="text/javascript" src="assets/js/app.js"></script>
+        <script type="text/javascript" src="app.js"></script>
         <!-- Bootstrap Core JavaScript -->
         <script src="assets/js/bootstrap.min.js"></script>
 </body>

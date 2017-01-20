@@ -6,7 +6,7 @@ $(document).ready(function()
   var items = getFromLocal('TTI');
   var allItems = getFromLocal('allItems');
   var showData = $('#accountSelGroup');
-  var tcsmDrop = $('#setTCSM');
+  var tcsmDrop = $('#tcsmGroup');
   var date = new Date();
   var dateEx = new Date();
   var parsedDate = date.toDateString();
@@ -15,12 +15,25 @@ $(document).ready(function()
   var totalTime = 0;
   var newTime = 0;
   var tIArray = [];
+  var tcsmSelected = getFromLocal('tcsmSelected');
+  var tcsm = $('#tcsmGroup').val();
 
- baconTime();
-console.log(date);
 
+  baconTime();
+  lookupTCSM();
 
-  console.log(parsedDate);
+    //Set Date formatting
+      var d = new Date(date || Date.now()),
+          month = '' + (d.getMonth() + 1),
+          day = '' + d.getDate(),
+          year = d.getFullYear();
+
+      if (month.length < 2) month = '0' + month;
+      if (day.length < 2) day = '0' + day;
+
+      var formatDate = (month + '/'+ day +'/'+year);
+
+  console.log(formatDate);
   $('#bacon').append('<h3>'+ parsedDate +'</h3>');
 
   function baconTime(){
@@ -45,60 +58,89 @@ console.log(date);
   // }
 }
   // Read accounts from json file
-   $.getJSON(url, function (data) {
+  $.getJSON(url, function (data) {
 
 
-     var items2 = data.Accounts.map(function (item) {
-       return item.value;
-     });
+    var items2 = data.Accounts.map(function (item) {
+      return item.value;
+    });
 
-     showData.empty();
+    showData.empty();
 
-     if (items2.length) {
-       items2.sort();
-       var content = '<option>' + items2.join('</option><option>') + '</option>';
-       var list = content;
-       showData.append(list);
-     }
-     return false;
-   });
+    if (items2.length) {
+      items2.sort();
+      var content = '<option>' + items2.join('</option><option>') + '</option>';
+      var list = content;
+      showData.append(list);
+    }
+    return false;
+  });
+
+  //Populate TCSM list
+   function lookupTCSM (){
+     if(tcsmSelected == "" ){
+
+       $.getJSON(tcsmList, function (data) {
+
+         var tcsmData = data.Tcsms.map(function (item) {
+           return item.value;
+         });
+         console.log(tcsmSelected + " in iff");
+
+         tcsmDrop.empty();
+
+         if (tcsmData.length) {
+           tcsmData.sort();
+           var tcontent = '<option>' + tcsmData.join('</option><option>') + '</option>';
+           var tlist = tcontent;
+           tcsmDrop.append(tlist);
+         }
+         return false;
+       });
+   } else {
+     tcontent = '<option>' + tcsmSelected + '</option>';
+     tcsmDrop.append(tcontent);
+     console.log("this is selected" + tcsmSelected);
+   }
+  }
 
    loadList(items);
 
    //Set TCSM
    $('#setTCSM').click(function(){
-    if (tcsm != ) {
-       dateExported = getFromLocal('DE');
-       parsedDate = getFromLocal('PD');
-       console.log("we are in IF" + parsedDate + dateExported);
-     $("#body").removeClass("notExported");
-       $("#body").addClass("Exported");
+     var tcsm = $('#tcsmGroup').val();
+     console.log ("Selected TCSM is "+ tcsm);
+    if (tcsm != null) {
+
+      $("#tcsmGroup").addClass("disabledInput");
+      $("#tcsmGroup").attr('disabled', true);
+      $("#setTCSM").attr('disabled', true);
+      storeToLocal("tcsmSelected", tcsm);
+
      } else {
        alert("Please select TCSM");
-       $("#body").removeClass("Exported");
-       $("#body").addClass("notExported");
+
        return false;
      }
 
    });
 
-   //Populate TCSM list
-   $.getJSON(tcsmList, function (data) {
+   //loadTCSM
 
-     var tcsmData = data.Tcsms.map(function (item) {
-       return item.value;
-     });
+   function loadTCSM(){
+     if (tcsmSelected != "") {
+       console.log("whattt"+ tcsmSelected);
+       $("#tcsmGroup").addClass("disabledInput");
+       $("#tcsmGroup").attr('disabled', true);
+       $("#setTCSM").attr('disabled', true);
+      } else {
+        console.log("we in here"+ tcsmSelected);
+        $("#tcsmGroup").removeAttr('disabled');
+        $("#setTCSM").removeAttr('disabled');
 
-     tcsmDrop.empty();
-
-     if (tcsmData.length) {
-       tcsmData.sort();
-       var tcontent = '<option>' + tcsmData.join('</option><option>') + '</option>';
-       var tlist = tcontent;
-       tcsmDrop.append(tlist);
-     }
-     return false;
-   });
+      }
+   }
+ loadTCSM();
 
    // Weekly Total to CSV
    $('#exportToCSV').click(function()
@@ -108,7 +150,7 @@ console.log(date);
      $('#dateExported').text('Last Exported: ' + dateExported);
      storeToLocal('DE',dateExported);
      var data = [];
-     var headers = ["Date","Type","Account","Time Spent"];
+     var headers = ["Date","Type","Account","Time Spent","TCSM"];
      allItems.push(headers);
      data = allItems.reverse();
      var csvContent = "data:text/csv;charset=utf-8;,";
@@ -132,7 +174,7 @@ console.log(date);
    $('#BackUpToCSV').click(function()
    {
      var data = [];
-     var headers = ["Date","Type","Account","Time Spent"];
+     var headers = ["Date","Type","Account","Time Spent","TCSM"];
      items.push(headers);
      data = items.reverse();
      var csvContent = "data:text/csv;charset=utf-8;,";
@@ -162,18 +204,19 @@ console.log(date);
 $('#addTask').click(function(){
     var item1 =[],item2 = [], item3 = [], item4 = [], itemDate = [], value = [];
 
-    item1.push($('#setTCSM').val());
+    item1.push(tcsmSelected);
     item2.push($('#typeSel').val());
     item3.push($('#accountSelGroup').val());
     item4.push($('#timeInput').val());
-    itemDate.push(date);
+    itemDate.push(formatDate);
 
-    value = itemDate.concat(item1,item2,item3,item4);
+    value = itemDate.concat(item2,item3,item4,item1);
+    console.log(value);
 
     items.reverse();
     allItems.reverse();
     //console.log(value);
-    if (item3 != "-- Select One --" && item2 != "-- Select One --"){
+    if (item3 != "-- Select One --" && item2 != "-- Select One --" && tcsmSelected != ""){
       console.log("this is timeinput "+ item4);
       items.push(value);
       allItems.push(value);
@@ -186,7 +229,7 @@ $('#addTask').click(function(){
       $('#timeInput').val(0);
     //  location.reload();
     } else {
-      alert("Please complete all fields");
+      alert("Please complete all fields and lock TCSM name");
       return false;
     }
 
@@ -204,20 +247,34 @@ $('#addTask').click(function(){
 
   $('#clearAll').click(function(){
 
-    if (confirm("Are you sure you want to delete ALL items?")) {
-    //event.stopPropagation();
-    allItems = [];
-    items= [];
-    console.log(allItems);
-    storeToLocal('allItems', allItems);
-    storeToLocal('TTI', items);
-    loadList(items);
-    taskCount();
-    hourCount();
-    location.reload();
-  }
-    return false;
-   });
+    var confirm1 = confirm("Are you sure you want to delete ALL items?");
+            if (confirm1)
+        {
+          var confirm2 = confirm("Are you 100% sure???");
+          if (confirm2)
+          {
+            allItems = [];
+            items= [];
+            console.log(allItems);
+            storeToLocal('allItems', allItems);
+            storeToLocal('TTI', items);
+            loadList(items);
+            taskCount();
+            hourCount();
+            location.reload();
+          }
+          else
+          {
+            return false;
+          }
+        }
+        else
+        {
+          return false;
+        }
+     });
+
+   //Clear Current Data
    $('#clearYesterday').click(function(){
 
      if (confirm("Are you sure you want to delete current items?")) {
@@ -252,11 +309,11 @@ $('#addTask').click(function(){
       });
 
       items.splice(index, 1);
-      allItems.reverse();
       allItems.splice(index, 1);
 
       storeToLocal('TTI', items);
       storeToLocal('allItems', allItems);
+      location.reload();
     }
       return false;
   	});
